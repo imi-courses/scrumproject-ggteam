@@ -7,11 +7,11 @@ import (
 )
 
 type UseCases struct {
-	UserUseCase User
+	AdminUseCase Admin
 }
 
 func New(cfg *config.Config, db *postgres.Postgres) UseCases {
 	return UseCases{
-		UserUseCase: NewUser(repo.NewUser(db), cfg.ContextTimeout),
+		AdminUseCase: NewAdmin(repo.NewAdmin(db), newHashPassword(), cfg.ContextTimeout),
 	}
 }

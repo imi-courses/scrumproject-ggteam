@@ -15,5 +15,5 @@ func main() {
 		log.Fatalf("Failed connect to postgres: %s", err.Error())
 		return
 	}
-	db.AutoMigrate(&entity.Person{}, &entity.User{})
+	db.AutoMigrate(&entity.Admin{}, &entity.Employee{})
 }

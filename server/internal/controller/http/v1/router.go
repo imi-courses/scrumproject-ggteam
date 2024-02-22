@@ -15,6 +15,6 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 
 	h := handler.Group("/api/v1")
 	{
-		NewUser(h, uc.UserUseCase, l)
+		newAdmin(h, uc.AdminUseCase, l)
 	}
 }
