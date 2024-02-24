@@ -23,8 +23,8 @@ type (
 		Delete(context.Context, string) error
 	}
 
-	// Hash Password
-	HashPassword interface {
+	// Hash
+	Hash interface {
 		HashPassword(string) (string, error)
 		CheckPasswordHash(string, string) bool
 	}

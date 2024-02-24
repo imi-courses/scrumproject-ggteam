@@ -12,14 +12,12 @@ import (
 
 type AdminUseCase struct {
 	repo       AdminRepo
-	hpass      HashPassword
 	ctxTimeout time.Duration
 }
 
-func NewAdmin(r AdminRepo, h HashPassword, t time.Duration) *AdminUseCase {
+func newAdmin(r AdminRepo, t time.Duration) *AdminUseCase {
 	return &AdminUseCase{
 		repo:       r,
-		hpass:      h,
 		ctxTimeout: t,
 	}
 }
@@ -27,11 +25,6 @@ func NewAdmin(r AdminRepo, h HashPassword, t time.Duration) *AdminUseCase {
 func (uc *AdminUseCase) SignUp(c context.Context, data dto.SignUpAdmin) (*entity.Admin, error) {
 	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
 	defer cancel()
-	hashedPassword, err := uc.hpass.HashPassword(data.Password)
-	if err != nil {
-		return nil, err
-	}
-	data.Password = hashedPassword
 	user, err := uc.repo.Create(ctx, dto.CreateAdmin(data))
 	if err != nil {
 		return nil, err

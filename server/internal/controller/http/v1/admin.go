@@ -11,17 +11,20 @@ import (
 )
 
 type adminRoute struct {
-	u usecase.Admin
-	l *slog.Logger
+	ua usecase.Admin
+	uh usecase.Hash
+	l  *slog.Logger
 }
 
-func newAdmin(handler *gin.RouterGroup, u usecase.Admin, l *slog.Logger) {
-	r := &adminRoute{u, l}
+func newAdmin(handler *gin.RouterGroup, ua usecase.Admin, uh usecase.Hash, l *slog.Logger) {
+	r := &adminRoute{ua, uh, l}
 	h := handler.Group("/admin")
 	{
 		h.POST("/", r.signUp)
 	}
 }
+
+// Sign Up
 
 type signUpAdminRequest dto.CreateAdmin
 
@@ -34,7 +37,16 @@ func (r *adminRoute) signUp(c *gin.Context) {
 		return
 	}
 
-	admin, err := r.u.SignUp(c.Request.Context(), dto.SignUpAdmin(body))
+	hashedPassword, err := r.uh.HashPassword(body.Password)
+	if err != nil {
+		r.l.Error(err.Error())
+		errorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	body.Password = hashedPassword
+
+	admin, err := r.ua.SignUp(c.Request.Context(), dto.SignUpAdmin(body))
 	if err != nil {
 		r.l.Error(err.Error())
 		errorResponse(c, http.StatusInternalServerError, err.Error())

@@ -8,10 +8,12 @@ import (
 
 type UseCases struct {
 	AdminUseCase Admin
+	HashUseCase  Hash
 }
 
 func New(cfg *config.Config, db *postgres.Postgres) UseCases {
 	return UseCases{
-		AdminUseCase: NewAdmin(repo.NewAdmin(db), newHashPassword(), cfg.ContextTimeout),
+		AdminUseCase: newAdmin(repo.NewAdmin(db), cfg.ContextTimeout),
+		HashUseCase:  newHash(),
 	}
 }
