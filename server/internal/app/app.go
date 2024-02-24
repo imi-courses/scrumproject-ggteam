@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	v1 "github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/config"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/httpserver"
@@ -26,6 +27,13 @@ func Run(cfg *config.Config) {
 		logger.Fatal(log, "Failed connect to postgres:", err)
 	}
 	log.Info("Connected to postgres")
+
+	// Migration in prod
+	if cfg.Env == "prod" {
+		if (!db.Migrator().HasTable(&entity.Admin{})) {
+			migrate(db)
+		}
+	}
 
 	// UseCases
 	usecases := usecase.New(cfg, db)
