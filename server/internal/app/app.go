@@ -19,9 +19,9 @@ import (
 func Run(cfg *config.Config) {
 	log := logger.New(cfg.Env)
 
-	log.Info(fmt.Sprintf("Starting server at Port: %s", cfg.Http.Port))
+	log.Info(fmt.Sprintf("Starting server at Port: %s", cfg.HTTP.Port))
 
-	db, err := postgres.New((*postgres.Config)(&cfg.DB))
+	db, err := postgres.New(&cfg.DB)
 	if err != nil {
 		logger.Fatal(log, "Failed connect to postgres:", err)
 	}
@@ -37,7 +37,7 @@ func Run(cfg *config.Config) {
 	}
 	handler := gin.New()
 	v1.NewRouter(handler, log, usecases)
-	httpServer := httpserver.New(handler, ((*httpserver.Config)(&cfg.Http)))
+	httpServer := httpserver.New(handler, &cfg.HTTP)
 
 	// Waiting signal
 	interrupt := make(chan os.Signal, 1)

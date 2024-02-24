@@ -13,14 +13,6 @@ type Server struct {
 	shutdownTimeout time.Duration
 }
 
-type Config struct {
-	Port            string
-	Host            string
-	ReadTimeout     time.Duration
-	WriteTimeout    time.Duration
-	ShutdownTimeout time.Duration
-}
-
 func New(handler http.Handler, cfg *Config, opts ...Option) *Server {
 	httpServer := &http.Server{
 		Handler:      handler,

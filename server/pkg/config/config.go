@@ -7,29 +7,17 @@ import (
 
 	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/joho/godotenv"
+
+	"github.com/imi-courses/scrumproject-ggteam/server/pkg/httpserver"
+	"github.com/imi-courses/scrumproject-ggteam/server/pkg/postgres"
 )
 
 type Config struct {
-	Env            string        `yaml:"env"             env-required:"true"`
-	ContextTimeout time.Duration `yaml:"context_timeout" env-required:"true"`
-	Http           HTTPServer    `yaml:"http"            env-required:"true"`
-	DB             Postgres      `yaml:"postgres"        env-required:"true"`
-}
-
-type HTTPServer struct {
-	Port            string        `yaml:"port"             env-required:"true"`
-	Host            string        `yaml:"host"             env-required:"true"`
-	ReadTimeout     time.Duration `yaml:"read_timeout"     env-required:"true"`
-	WriteTimeout    time.Duration `yaml:"write_timeout"    env-required:"true"`
-	ShutdownTimeout time.Duration `yaml:"shutdown_timeout" env-required:"true"`
-}
-
-type Postgres struct {
-	Host     string `yaml:"host"     env-required:"true"`
-	Port     string `yaml:"port"     env-required:"true"`
-	Username string `yaml:"username" env-required:"true"`
-	Password string `yaml:"password" env-required:"true"`
-	Database string `yaml:"database" env-required:"true"`
+	Env            string            `yaml:"env"             env-required:"true"`
+	ContextTimeout time.Duration     `yaml:"context_timeout" env-required:"true"`
+	HTTP           httpserver.Config `yaml:"http"            env-required:"true"`
+	DB             postgres.Config   `yaml:"postgres"        env-required:"true"`
+	JWT            JWT               `yaml:"jwt"             env-required:"true"`
 }
 
 func MustLoad() *Config {
