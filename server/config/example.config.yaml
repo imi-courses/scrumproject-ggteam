@@ -16,3 +16,6 @@ jwt:
   secret: "secret"
   access_expires_at: 15m
   refresh_expires_at: 720h
+admin:
+  email: "vicdevcode@gmail.com"
+  password: "123123123"

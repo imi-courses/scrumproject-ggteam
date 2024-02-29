@@ -18,6 +18,12 @@ type Config struct {
 	HTTP           httpserver.Config `yaml:"http"            env-required:"true"`
 	DB             postgres.Config   `yaml:"postgres"        env-required:"true"`
 	JWT            JWT               `yaml:"jwt"             env-required:"true"`
+	Admin          Admin             `yaml:"admin"           env-required:"true"`
+}
+
+type Admin struct {
+	Email    string `yaml:"email"    env-required:"true"`
+	Password string `yaml:"password" env-required:"true"`
 }
 
 func MustLoad() *Config {

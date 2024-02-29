@@ -3,8 +3,6 @@ package repo
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/postgres"
@@ -29,14 +27,27 @@ func (r *AdminRepo) Create(ctx context.Context, data dto.CreateAdmin) (*entity.A
 	return admin, nil
 }
 
-func (r *AdminRepo) FindOne(ctx context.Context, id uuid.UUID) (*entity.Admin, error) {
-	var user *entity.Admin
-	if err := r.WithContext(ctx).First(&user, "id = ?", id).Error; err != nil {
+func (r *AdminRepo) FindOne(ctx context.Context, p dto.FindOneAdmin) (*entity.Admin, error) {
+	var admin *entity.Admin
+	if err := r.WithContext(ctx).Where(&entity.Admin{ID: p.ID, Email: p.Email}).First(&admin).Error; err != nil {
 		return nil, err
 	}
-	return user, nil
+	return admin, nil
 }
 
 func (r *AdminRepo) Delete(ctx context.Context, id string) error {
 	return nil
+}
+
+func (r *AdminRepo) UpdateRefreshToken(ctx context.Context, data dto.UpdateRefreshToken) (*entity.Admin, error) {
+	admin := &entity.Admin{
+		ID: data.ID,
+	}
+	if err := r.WithContext(ctx).Model(&admin).Update("refresh_token", data.RefreshToken).Error; err != nil {
+		return nil, err
+	}
+	if err := r.WithContext(ctx).Where("id = ?", data.ID).First(&admin).Error; err != nil {
+		return nil, err
+	}
+	return admin, nil
 }

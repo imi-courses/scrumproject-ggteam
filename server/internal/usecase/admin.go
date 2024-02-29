@@ -4,8 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/google/uuid"
-
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
@@ -32,20 +30,10 @@ func (uc *AdminUseCase) SignUp(c context.Context, data dto.SignUpAdmin) (*entity
 	return user, nil
 }
 
-func (uc *AdminUseCase) SignIn(c context.Context, id uuid.UUID) (*entity.Admin, error) {
+func (uc *AdminUseCase) FindOne(c context.Context, p dto.FindOneAdmin) (*entity.Admin, error) {
 	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
 	defer cancel()
-	user, err := uc.repo.FindOne(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	return user, nil
-}
-
-func (uc *AdminUseCase) FindOne(c context.Context, id uuid.UUID) (*entity.Admin, error) {
-	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
-	defer cancel()
-	user, err := uc.repo.FindOne(ctx, id)
+	user, err := uc.repo.FindOne(ctx, p)
 	if err != nil {
 		return nil, err
 	}
@@ -54,4 +42,14 @@ func (uc *AdminUseCase) FindOne(c context.Context, id uuid.UUID) (*entity.Admin,
 
 func (uc *AdminUseCase) Delete(c context.Context, id string) error {
 	return nil
+}
+
+func (uc *AdminUseCase) UpdateRefreshToken(c context.Context, data dto.UpdateRefreshToken) (*entity.Admin, error) {
+	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
+	defer cancel()
+	admin, err := uc.repo.UpdateRefreshToken(ctx, data)
+	if err != nil {
+		return nil, err
+	}
+	return admin, err
 }
