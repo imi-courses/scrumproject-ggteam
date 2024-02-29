@@ -1,0 +1,21 @@
+env: "prod"
+context_timeout: 5s
+http:
+  port: "5000"
+  host: "app"
+  read_timeout: 5s
+  write_timeout: 5s
+  shutdown_timeout: 5s
+postgres:
+  username: "ggteam"
+  password: "password-ggteam"
+  host: "db"
+  port: "5432"
+  database: "rosreestr"
+jwt:
+  secret: "secret"
+  access_expires_at: 15m
+  refresh_expires_at: 720h
+admin:
+  email: "vicdevcode@gmail.com"
+  password: "123123123"
