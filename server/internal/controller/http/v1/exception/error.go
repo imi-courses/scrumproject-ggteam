@@ -1,4 +1,4 @@
-package v1
+package exception
 
 import (
 	"net/http"
@@ -10,14 +10,14 @@ type messageResponse struct {
 	Message string `json:"message"`
 }
 
-func errorResponse(c *gin.Context, code int, message string) {
+func ErrorResponse(c *gin.Context, code int, message string) {
 	c.AbortWithStatusJSON(code, messageResponse{message})
 }
 
-func badRequest(c *gin.Context, message string) {
+func BadRequest(c *gin.Context, message string) {
 	c.AbortWithStatusJSON(http.StatusBadRequest, messageResponse{message})
 }
 
-func internalServerError(c *gin.Context, message string) {
+func InternalServerError(c *gin.Context, message string) {
 	c.AbortWithStatusJSON(http.StatusInternalServerError, messageResponse{message})
 }

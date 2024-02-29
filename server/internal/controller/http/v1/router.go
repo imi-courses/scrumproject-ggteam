@@ -5,6 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/admin"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/auth"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 )
 
@@ -15,7 +17,7 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 
 	h := handler.Group("/api/v1")
 	{
-		newAdmin(h, uc.AdminUseCase, uc.HashUseCase, l)
-		newAuth(h, uc.AdminUseCase, uc.HashUseCase, uc.JwtUseCase, l)
+		admin.New(h, uc.AdminUseCase, uc.HashUseCase, l)
+		auth.New(h, uc.AdminUseCase, uc.EmployeeUseCase, uc.HashUseCase, uc.JwtUseCase, l)
 	}
 }
