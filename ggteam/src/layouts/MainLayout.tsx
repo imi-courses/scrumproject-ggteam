@@ -1,9 +1,12 @@
+import { AuthProvider } from "src/app/providers/auth";
 import AuthPage from "src/pages/Auth";
 
 const MainLayout = () => {
   return (
     <>
-      <AuthPage />
+      <AuthProvider>
+        <AuthPage />
+      </AuthProvider>
     </>
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "src/app/providers/auth";
 import AdminForm from "src/widgets/AdminForm";
 import CreateEmployeeForm from "src/widgets/CreateEmployeeForm";
 import EmployeeForm from "src/widgets/EmployeeForm";
@@ -14,6 +15,8 @@ const AuthPage = () => {
     AdminAuthForm: false,
     EmployeeAuthForm: true,
   });
+
+  const { isAuth } = useAuth();
 
   const changeAuthForm = (adminForm: boolean) => {
     if (adminForm) {
@@ -31,6 +34,8 @@ const AuthPage = () => {
     const json = await response.json();
     console.log(json);
   };
+
+  if (isAuth) return;
 
   return (
     <section>
