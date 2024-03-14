@@ -5,9 +5,10 @@ import (
 )
 
 type Config struct {
-	Secret           string
-	AccessExpiresAt  time.Duration
-	RefreshExpiresAt time.Duration
+	AccessTokenSecret  string
+	RefreshTokenSecret string
+	AccessExpiresAt    time.Duration
+	RefreshExpiresAt   time.Duration
 }
 
 type UseCase struct {

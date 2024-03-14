@@ -17,5 +17,6 @@ type (
 	Employee interface {
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
 		FindOne(context.Context, dto.FindOneEmployee) (*entity.Employee, error)
+		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 )

@@ -21,6 +21,6 @@ func New(handler *gin.RouterGroup, ua usecase.Admin, ue usecase.Employee, uh use
 	h := handler.Group("/auth")
 	{
 		h.POST("/admin", r.signInAdmin)
-		h.POST("/", r.singUp)
+		h.POST("/", r.signIn)
 	}
 }
