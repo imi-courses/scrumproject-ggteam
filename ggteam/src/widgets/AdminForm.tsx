@@ -18,10 +18,11 @@ const AdminForm = () => {
       body: JSON.stringify({ email: email, password: password }),
       credentials: "include",
     });
-
     const json = await response.json();
-    localStorage.setItem("access_token", json["access_token"]);
-    setAuth(true);
+    if (response.status === 200) {
+      localStorage.setItem("access_token", json["access_token"]);
+      setAuth(true);
+    }
     console.log(json);
   };
 
