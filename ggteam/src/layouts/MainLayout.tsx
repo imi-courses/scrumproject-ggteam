@@ -1,9 +1,9 @@
-import AdminLoginPage from "src/pages/AdminLogin";
+import AuthPage from "src/pages/Auth";
 
 const MainLayout = () => {
   return (
     <>
-      <AdminLoginPage />
+      <AuthPage />
     </>
   );
 };

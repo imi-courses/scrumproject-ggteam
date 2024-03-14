@@ -2,19 +2,19 @@ import { FormEvent, useState } from "react";
 import Button from "ui/Button";
 import Input from "ui/Input";
 
-const AdminForm = () => {
+const EmployeeForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const response = await fetch(import.meta.env.VITE_API_URL + "/auth/admin", {
+    const response = await fetch(import.meta.env.VITE_API_URL + "/auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: email, password: password }),
       credentials: "include",
+      body: JSON.stringify({ email, password }),
     });
 
     const json = await response.json();
@@ -31,4 +31,4 @@ const AdminForm = () => {
   );
 };
 
-export default AdminForm;
+export default EmployeeForm;
