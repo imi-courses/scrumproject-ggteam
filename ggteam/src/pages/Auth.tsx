@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "src/app/providers/auth";
 import AdminForm from "src/widgets/AdminForm";
 import CreateEmployeeForm from "src/widgets/CreateEmployeeForm";
@@ -35,13 +36,13 @@ const AuthPage = () => {
     console.log(json);
   };
 
-  if (isAuth) return;
-
   return (
     <section>
       <h1 onClick={test}>Авторизация</h1>
       <span>Росреестр</span>
-      <div>
+      {isAuth ? (
+        <Navigate to="/admin" replace /> // Redirect to admin path
+      ) : (<div>
         <div>
           <Button onClick={() => changeAuthForm(false)}>Работник</Button>
           <Button onClick={() => changeAuthForm(true)}>Администратор</Button>
@@ -50,6 +51,7 @@ const AuthPage = () => {
         {showAuthForm.EmployeeAuthForm && <EmployeeForm />}
         <CreateEmployeeForm />
       </div>
+      )}  
     </section>
   );
 };
