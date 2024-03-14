@@ -2,17 +2,24 @@ package employee
 
 import (
 	"context"
+	"errors"
 
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
+	"github.com/google/uuid"
+
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
 
-func (uc *UseCase) FindOne(c context.Context, data dto.FindOneEmployee) (*entity.Employee, error) {
+func (uc *UseCase) FindOne(c context.Context, data entity.Employee) (*entity.Employee, error) {
 	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
 	defer cancel()
-	employee, err := uc.repo.FindOne(ctx, data)
-	if err != nil {
-		return nil, err
+
+	if len(data.Email) != 0 {
+		return uc.repo.FindOneByEmail(ctx, data.Email)
+	} else if uuid.Nil != data.ID {
+		return uc.repo.FindOneById(ctx, data.ID)
+	} else if len(data.RefreshToken) != 0 {
+		return uc.repo.FindOneByRefreshToken(ctx, data.RefreshToken)
 	}
-	return employee, nil
+
+	return nil, errors.New("record not found")
 }

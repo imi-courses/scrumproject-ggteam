@@ -28,7 +28,7 @@ func (r *route) signInAdmin(c *gin.Context) {
 		return
 	}
 
-	candidate, err := r.ua.FindOne(c, dto.FindOneAdmin{Email: body.Email})
+	candidate, err := r.ua.FindOne(c, entity.Admin{Email: body.Email})
 	if err != nil {
 		exception.BadRequest(c, err.Error())
 		return
@@ -43,9 +43,11 @@ func (r *route) signInAdmin(c *gin.Context) {
 	tokens, err := r.uj.CreateTokens(dto.AccessTokenPayload{
 		ID:    fmt.Sprintf("%v", candidate.ID),
 		Email: candidate.Email,
+		Role:  "admin",
 	}, dto.RefreshTokenPayload{
 		ID:    fmt.Sprintf("%v", candidate.ID),
 		Email: candidate.Email,
+		Role:  "admin",
 	})
 	if err != nil {
 		exception.InternalServerError(c, err.Error())

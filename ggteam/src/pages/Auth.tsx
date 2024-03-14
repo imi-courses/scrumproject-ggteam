@@ -1,9 +1,8 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "src/app/providers/auth";
-import AdminForm from "src/widgets/AdminForm";
-import CreateEmployeeForm from "src/widgets/CreateEmployeeForm";
-import EmployeeForm from "src/widgets/EmployeeForm";
+import AdminForm from "src/features/AdminForm";
+import EmployeeForm from "src/features/EmployeeForm";
 import Button from "ui/Button";
 
 interface showAuthForm {
@@ -16,8 +15,8 @@ const AuthPage = () => {
     AdminAuthForm: false,
     EmployeeAuthForm: true,
   });
-
-  const { isAuth } = useAuth();
+  const { isLoading, isAuth } = useAuth();
+  const navigate = useNavigate();
 
   const changeAuthForm = (adminForm: boolean) => {
     if (adminForm) {
@@ -27,31 +26,20 @@ const AuthPage = () => {
     }
   };
 
-  const test = async () => {
-    const response = await fetch(import.meta.env.VITE_API_URL + "/auth/", {
-      credentials: "include",
-    });
-
-    const json = await response.json();
-    console.log(json);
-  };
+  useEffect(() => {
+    if (!isLoading && isAuth) navigate("/");
+  }, [isAuth, isLoading, navigate]);
 
   return (
     <section>
-      <h1 onClick={test}>Авторизация</h1>
+      <h1>Авторизация</h1>
       <span>Росреестр</span>
-      {isAuth ? (
-        <Navigate to="/admin" replace /> // Redirect to admin path
-      ) : (<div>
-        <div>
-          <Button onClick={() => changeAuthForm(false)}>Работник</Button>
-          <Button onClick={() => changeAuthForm(true)}>Администратор</Button>
-        </div>
-        {showAuthForm.AdminAuthForm && <AdminForm />}
-        {showAuthForm.EmployeeAuthForm && <EmployeeForm />}
-        <CreateEmployeeForm />
+      <div>
+        <Button onClick={() => changeAuthForm(false)}>Работник</Button>
+        <Button onClick={() => changeAuthForm(true)}>Администратор</Button>
       </div>
-      )}  
+      {showAuthForm.AdminAuthForm && <AdminForm />}
+      {showAuthForm.EmployeeAuthForm && <EmployeeForm />}
     </section>
   );
 };

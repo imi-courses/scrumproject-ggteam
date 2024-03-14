@@ -1,14 +1,9 @@
-import { AuthProvider } from "src/app/providers/auth";
-import AuthPage from "src/pages/Auth";
+import { FC, PropsWithChildren } from "react";
+import { useAuth } from "src/app/providers/auth";
 
-const MainLayout = () => {
-  return (
-    <>
-      <AuthProvider>
-        <AuthPage />
-      </AuthProvider>
-    </>
-  );
+const MainLayout: FC<PropsWithChildren> = ({ children }) => {
+  const { isLoading: authIsLoading } = useAuth();
+  return <>{authIsLoading ? <div>Loading</div> : children}</>;
 };
 
 export default MainLayout;

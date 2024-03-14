@@ -25,3 +25,7 @@ func InternalServerError(c *gin.Context, message string) {
 func UnAuthorized(c *gin.Context) {
 	c.AbortWithStatusJSON(http.StatusUnauthorized, messageResponse{"unauthorized"})
 }
+
+func UnAuthorizedWithMessage(c *gin.Context, message string) {
+	c.AbortWithStatusJSON(http.StatusUnauthorized, messageResponse{message})
+}

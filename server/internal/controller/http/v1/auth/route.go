@@ -16,11 +16,14 @@ type route struct {
 	l  *slog.Logger
 }
 
-func New(handler *gin.RouterGroup, ua usecase.Admin, ue usecase.Employee, uh usecase.Hash, uj usecase.Jwt, l *slog.Logger) {
+func New(publicHandler *gin.RouterGroup, privateHandler *gin.RouterGroup, ua usecase.Admin, ue usecase.Employee, uh usecase.Hash, uj usecase.Jwt, l *slog.Logger) {
 	r := &route{ua, ue, uh, uj, l}
-	h := handler.Group("/auth")
+	public := publicHandler.Group("/auth")
+	private := privateHandler.Group("/auth")
 	{
-		h.POST("/admin", r.signInAdmin)
-		h.POST("/", r.signIn)
+		public.POST("/admin", r.signInAdmin)
+		public.POST("/", r.signIn)
+		private.GET("/me", r.me)
+		public.GET("/refresh", r.refresh)
 	}
 }

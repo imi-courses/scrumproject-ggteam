@@ -33,7 +33,7 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 	protected.Use(middleware.AdminCheck(uc.JwtUseCase, uc.AdminUseCase))
 	{
 		admin.New(public, uc.AdminUseCase, uc.HashUseCase, l)
-		auth.New(public, uc.AdminUseCase, uc.EmployeeUseCase, uc.HashUseCase, uc.JwtUseCase, l)
+		auth.New(public, private, uc.AdminUseCase, uc.EmployeeUseCase, uc.HashUseCase, uc.JwtUseCase, l)
 		employee.New(protected, uc.EmployeeUseCase, uc.HashUseCase, l)
 	}
 }

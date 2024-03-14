@@ -26,7 +26,7 @@ func (r *route) create(c *gin.Context) {
 		return
 	}
 
-	_, err := r.ue.FindOne(c, dto.FindOneEmployee{Email: body.Email})
+	_, err := r.ue.FindOne(c, entity.Employee{Email: body.Email})
 	if err == nil {
 		exception.BadRequest(
 			c,

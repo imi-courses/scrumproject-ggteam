@@ -19,7 +19,7 @@ func JwtCheck(uj usecase.Jwt) gin.HandlerFunc {
 		token := strings.Split(headerToken[0], " ")[1]
 		ok, err := uj.IsTokenValid(token, true)
 		if err != nil {
-			exception.UnAuthorized(c)
+			exception.UnAuthorizedWithMessage(c, err.Error())
 			return
 		}
 		if !ok {

@@ -2,17 +2,24 @@ package admin
 
 import (
 	"context"
+	"errors"
 
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
+	"github.com/google/uuid"
+
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
 
-func (uc *UseCase) FindOne(c context.Context, p dto.FindOneAdmin) (*entity.Admin, error) {
+func (uc *UseCase) FindOne(c context.Context, data entity.Admin) (*entity.Admin, error) {
 	ctx, cancel := context.WithTimeout(c, uc.ctxTimeout)
 	defer cancel()
-	user, err := uc.repo.FindOne(ctx, p)
-	if err != nil {
-		return nil, err
+
+	if len(data.Email) != 0 {
+		return uc.repo.FindOneByEmail(ctx, data.Email)
+	} else if uuid.Nil != data.ID {
+		return uc.repo.FindOneById(ctx, data.ID)
+	} else if len(data.RefreshToken) != 0 {
+		return uc.repo.FindOneByRefreshToken(ctx, data.RefreshToken)
 	}
-	return user, nil
+
+	return nil, errors.New("record not found")
 }

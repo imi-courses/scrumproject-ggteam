@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/exception"
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 )
 
@@ -37,7 +37,7 @@ func AdminCheck(uj usecase.Jwt, ua usecase.Admin) gin.HandlerFunc {
 		}
 		email, err := uj.ExtractFromToken(token, "email", true)
 
-		admin, err := ua.FindOne(c, dto.FindOneAdmin{
+		admin, err := ua.FindOne(c, entity.Admin{
 			ID: uuid.MustParse(id),
 		})
 		if err != nil {

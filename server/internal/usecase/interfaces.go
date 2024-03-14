@@ -9,13 +9,13 @@ import (
 
 type (
 	Admin interface {
-		FindOne(context.Context, dto.FindOneAdmin) (*entity.Admin, error)
+		FindOne(context.Context, entity.Admin) (*entity.Admin, error)
 		Delete(context.Context, string) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Admin, error)
 	}
 	Employee interface {
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
-		FindOne(context.Context, dto.FindOneEmployee) (*entity.Employee, error)
+		FindOne(context.Context, entity.Employee) (*entity.Employee, error)
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	Hash interface {
