@@ -18,6 +18,8 @@ interface AuthContext {
   setAuth: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
   userRole: UserRole;
+  logout: () => void;
+  token: string;
 }
 
 const defaultValues: AuthContext = {
@@ -25,6 +27,8 @@ const defaultValues: AuthContext = {
   setAuth: () => null,
   isLoading: true,
   userRole: undefined,
+  logout: () => null,
+  token: "",
 };
 
 const Context = createContext(defaultValues);
@@ -36,6 +40,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   const [isAuth, setAuth] = useState<boolean>(defaultValues.isAuth);
   const [isLoading, setLoading] = useState<boolean>(defaultValues.isLoading);
   const [userRole, setUserRole] = useState<UserRole>(defaultValues.userRole);
+  const [token, setToken] = useState(defaultValues.token);
   const navigate = useNavigate();
 
   const refreshTokens = useCallback(async () => {
@@ -69,12 +74,14 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
           const data = await res.json();
           if (res.status === 200) {
             setAuth(true);
+            setToken(token);
             setUserRole(data["role"]);
           } else {
-            const isLoggedOut = await refreshTokens();
-            if (isLoggedOut) {
+            const isLoggedIn = await refreshTokens();
+            if (isLoggedIn) {
               setAuth(true);
               setUserRole(data["role"]);
+              setToken(token);
             } else {
               setLoading(false);
               setAuth(false);
@@ -89,22 +96,45 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
     [navigate, refreshTokens],
   );
 
+  const logout = async () => {
+    return fetch(import.meta.env.VITE_API_URL + "/auth/logout", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      credentials: "include",
+    })
+      .then(async (res) => {
+        if (res.status === 200) {
+          setAuth(false);
+          localStorage.removeItem("access_token");
+          navigate("/auth");
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    return () => {
-      if (token) {
+    if (token)
+      return () => {
         getUserInfo(token);
-      } else {
-        setLoading(false);
-      }
+      };
+
+    navigate("/auth");
+    return () => {
+      setLoading(false);
+      setAuth(false);
     };
-  }, [getUserInfo]);
+  }, [getUserInfo, navigate]);
 
   const exposed = {
     isAuth,
     setAuth,
     isLoading,
     userRole,
+    logout,
+    token,
   };
 
   return <Context.Provider value={exposed}>{children}</Context.Provider>;

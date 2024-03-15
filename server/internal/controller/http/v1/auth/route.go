@@ -25,5 +25,6 @@ func New(publicHandler *gin.RouterGroup, privateHandler *gin.RouterGroup, ua use
 		public.POST("/", r.signIn)
 		private.GET("/me", r.me)
 		public.GET("/refresh", r.refresh)
+		private.GET("/logout", r.logout)
 	}
 }
