@@ -4,6 +4,7 @@ import { useAuth } from "src/app/providers/auth";
 import AdminForm from "src/features/AdminForm";
 import EmployeeForm from "src/features/EmployeeForm";
 import Button from "ui/Button";
+import "styles/Auth.css";
 
 interface showAuthForm {
   AdminAuthForm: boolean;
@@ -31,9 +32,8 @@ const AuthPage = () => {
   }, [isAuth, isLoading, navigate]);
 
   return (
-    <section>
-      <h1>Авторизация</h1>
-      <span>Росреестр</span>
+    <section className="classAuth">
+      <h3 className="classTitleAuth">Авторизация</h3>
       <div>
         <Button onClick={() => changeAuthForm(false)}>Работник</Button>
         <Button onClick={() => changeAuthForm(true)}>Администратор</Button>

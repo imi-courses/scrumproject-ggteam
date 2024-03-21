@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, PropsWithChildren, forwardRef } from "react";
+import "styles/Button.css";
 
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
@@ -7,7 +8,7 @@ interface ButtonProps
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, ...props }, ref) => {
     return (
-      <button {...props} ref={ref}>
+      <button {...props} ref={ref} className="classButton">
         {children}
       </button>
     );
