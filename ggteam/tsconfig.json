@@ -18,8 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "styles/*": ["./src/shared/styles/*"],
+      "icons/*": ["./src/shared/icons/*"],
+      "ui/*": ["./src/shared/ui/*"],
+      "src/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "**/*.tsx", "**/*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

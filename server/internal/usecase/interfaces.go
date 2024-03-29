@@ -9,21 +9,24 @@ import (
 
 type (
 	Admin interface {
-		FindOne(context.Context, dto.FindOneAdmin) (*entity.Admin, error)
+		FindOne(context.Context, entity.Admin) (*entity.Admin, error)
 		Delete(context.Context, string) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Admin, error)
 	}
 	Employee interface {
-		SignUp(context.Context, dto.CreateEmployee) (*entity.Employee, error)
-		FindOne(context.Context, dto.FindOneEmployee) (*entity.Employee, error)
+		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
+		FindOne(context.Context, entity.Employee) (*entity.Employee, error)
+		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	Hash interface {
 		HashPassword(string) (string, error)
 		CheckPasswordHash(string, string) bool
 	}
 	Jwt interface {
-		CreateToken(dto.TokenPayload, bool) (string, error)
-		IsAuthorized(string) (bool, error)
-		ExtractIDFromToken(string) (string, error)
+		CreateAccessToken(dto.AccessTokenPayload) (string, error)
+		CreateRefreshToken(dto.RefreshTokenPayload) (string, error)
+		IsTokenValid(string, bool) (bool, error)
+		ExtractFromToken(string, string, bool) (string, error)
+		CreateTokens(dto.AccessTokenPayload, dto.RefreshTokenPayload) (*dto.Tokens, error)
 	}
 )

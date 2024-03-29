@@ -17,9 +17,8 @@ type signInAdminRequest struct {
 }
 
 type signInAdminResponse struct {
-	Admin        *entity.Admin `json:"admin"`
-	AccessToken  string        `json:"access_token"`
-	RefreshToken string        `json:"refresh_token"`
+	Admin       *entity.Admin `json:"admin"`
+	AccessToken string        `json:"access_token"`
 }
 
 func (r *route) signInAdmin(c *gin.Context) {
@@ -29,7 +28,7 @@ func (r *route) signInAdmin(c *gin.Context) {
 		return
 	}
 
-	candidate, err := r.ua.FindOne(c, dto.FindOneAdmin{Email: body.Email})
+	candidate, err := r.ua.FindOne(c, entity.Admin{Email: body.Email})
 	if err != nil {
 		exception.BadRequest(c, err.Error())
 		return
@@ -41,19 +40,15 @@ func (r *route) signInAdmin(c *gin.Context) {
 		return
 	}
 
-	accessToken, err := r.uj.CreateToken(dto.TokenPayload{
+	tokens, err := r.uj.CreateTokens(dto.AccessTokenPayload{
 		ID:    fmt.Sprintf("%v", candidate.ID),
 		Email: candidate.Email,
-	}, true)
-	if err != nil {
-		exception.InternalServerError(c, err.Error())
-		return
-	}
-
-	refreshToken, err := r.uj.CreateToken(dto.TokenPayload{
+		Role:  "admin",
+	}, dto.RefreshTokenPayload{
 		ID:    fmt.Sprintf("%v", candidate.ID),
 		Email: candidate.Email,
-	}, false)
+		Role:  "admin",
+	})
 	if err != nil {
 		exception.InternalServerError(c, err.Error())
 		return
@@ -61,16 +56,17 @@ func (r *route) signInAdmin(c *gin.Context) {
 
 	admin, err := r.ua.UpdateRefreshToken(c.Request.Context(), dto.UpdateRefreshToken{
 		ID:           candidate.ID,
-		RefreshToken: refreshToken,
+		RefreshToken: tokens.RefreshToken,
 	})
 	if err != nil {
 		exception.InternalServerError(c, err.Error())
 		return
 	}
 
+	c.SetCookie("refresh_token", tokens.RefreshToken, 3600, "/", "localhost", false, true)
+
 	c.JSON(http.StatusOK, &signInAdminResponse{
-		Admin:        admin,
-		AccessToken:  accessToken,
-		RefreshToken: refreshToken,
+		Admin:       admin,
+		AccessToken: tokens.AccessToken,
 	})
 }

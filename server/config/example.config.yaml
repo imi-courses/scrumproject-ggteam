@@ -13,7 +13,8 @@ postgres:
   port: "5432"
   database: "rosreestr"
 jwt:
-  secret: "secret"
+  access_token_secret: "secret"
+  refresh_token_secret: "sss"
   access_expires_at: 15m
   refresh_expires_at: 720h
 admin:

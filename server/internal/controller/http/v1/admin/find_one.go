@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/exception"
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
 
 func (r *route) findOne(c *gin.Context) {
@@ -24,12 +24,12 @@ func (r *route) findOne(c *gin.Context) {
 			return
 		}
 	}
-	p := dto.FindOneAdmin{
+	data := entity.Admin{
 		ID:    id,
 		Email: c.Query("email"),
 	}
 
-	user, err := r.ua.FindOne(c.Request.Context(), p)
+	user, err := r.ua.FindOne(c.Request.Context(), data)
 	if err != nil {
 		r.l.Error(err.Error())
 		exception.InternalServerError(c, err.Error())

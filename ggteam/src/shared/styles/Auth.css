@@ -1,0 +1,40 @@
+.classAuth {
+    margin: 5% auto;
+    width: 500px; 
+    padding: 15px;
+    border-radius: 15px; 
+    background-color: #e8e8e8;
+    text-align: center;
+}
+
+.classTitleAuth {
+    font-size: 28px;
+    font-family: sans-serif;
+    color: rgb(20, 20, 20);
+}
+
+.classMiniTitleAuth {
+    font-family: sans-serif;
+    color: rgb(20, 20, 20);
+}
+
+.classAdminForm {
+    width: 300px;
+    margin: 50px auto;
+}
+
+.classFormGroup {
+    margin: 10px;
+    padding: 10px 0 0 0;
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.classFormLabel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    color: rgb(20, 20, 20);
+    transition: 0.3s;
+}
