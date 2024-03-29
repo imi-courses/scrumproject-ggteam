@@ -13,6 +13,8 @@ import (
 
 type findAllResponse struct {
 	Employees []entity.Employee `json:"employees"`
+	Page      int               `json:"page"`
+	Count     int               `json:"count"`
 }
 
 func (r *route) findAll(c *gin.Context) {
@@ -54,5 +56,5 @@ func (r *route) findAll(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, findAllResponse{Employees: employees})
+	c.JSON(http.StatusOK, findAllResponse{Employees: employees, Page: currentPage, Count: count})
 }
