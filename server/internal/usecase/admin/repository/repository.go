@@ -1,4 +1,4 @@
-package admin
+package repository
 
 import "github.com/imi-courses/scrumproject-ggteam/server/pkg/postgres"
 

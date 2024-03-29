@@ -1,4 +1,4 @@
-package employee
+package repository
 
 import (
 	"context"
@@ -24,7 +24,10 @@ func (r *Repository) FindOneByEmail(ctx context.Context, email string) (*entity.
 	return employee, nil
 }
 
-func (r *Repository) FindOneByRefreshToken(ctx context.Context, refreshToken string) (*entity.Employee, error) {
+func (r *Repository) FindOneByRefreshToken(
+	ctx context.Context,
+	refreshToken string,
+) (*entity.Employee, error) {
 	var employee *entity.Employee
 	if err := r.WithContext(ctx).Where("refresh_token = ?", refreshToken).First(&employee).Error; err != nil {
 		return nil, err

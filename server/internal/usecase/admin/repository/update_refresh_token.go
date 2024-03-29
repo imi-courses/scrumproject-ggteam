@@ -1,4 +1,4 @@
-package admin
+package repository
 
 import (
 	"context"
@@ -7,7 +7,10 @@ import (
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
 
-func (r *Repository) UpdateRefreshToken(ctx context.Context, data dto.UpdateRefreshToken) (*entity.Admin, error) {
+func (r *Repository) UpdateRefreshToken(
+	ctx context.Context,
+	data dto.UpdateRefreshToken,
+) (*entity.Admin, error) {
 	admin := &entity.Admin{
 		ID: data.ID,
 	}
