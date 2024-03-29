@@ -1,10 +1,15 @@
 import { FC } from "react";
+import "styles/Header.css";
 
 const Header: FC = () => {
   return (
     <header className="headerStyle">
-      <div className="headerContainer">
-        <h3 className="headerLogo">Росреестр</h3>
+      <div className="headerLogo">
+        <h3>Росреестр</h3>
+      </div>
+      <div className="headerProfile">
+        <p>Войти</p>
+        {/* <p className="headerProfile">Профиль</p> */}
       </div>
     </header>
   );
