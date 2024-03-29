@@ -26,6 +26,10 @@ func (r *route) findAll(c *gin.Context) {
 			exception.BadRequest(c, "page undefined")
 			return
 		}
+		if currentPage < 1 {
+			exception.BadRequest(c, "page must be greater than 0")
+			return
+		}
 	}
 	if c.Query("count") == "" {
 		count = 10
@@ -33,6 +37,10 @@ func (r *route) findAll(c *gin.Context) {
 		count, err = strconv.Atoi(c.Query("count"))
 		if err != nil {
 			exception.BadRequest(c, "count undefined")
+			return
+		}
+		if count < 1 {
+			exception.BadRequest(c, "count must be greater than 0")
 			return
 		}
 	}
