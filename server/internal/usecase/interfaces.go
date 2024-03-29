@@ -33,6 +33,7 @@ type (
 	Employee interface {
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
 		FindOne(context.Context, entity.Employee) (*entity.Employee, error)
+		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	EmployeeRepo interface {
@@ -40,6 +41,7 @@ type (
 		FindOneById(context.Context, uuid.UUID) (*entity.Employee, error)
 		FindOneByEmail(context.Context, string) (*entity.Employee, error)
 		FindOneByRefreshToken(context.Context, string) (*entity.Employee, error)
+		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	Hash interface {

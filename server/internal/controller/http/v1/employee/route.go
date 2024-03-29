@@ -19,5 +19,6 @@ func New(handler *gin.RouterGroup, ue usecase.Employee, uh usecase.Hash, l *slog
 	h := handler.Group("/employee")
 	{
 		h.POST("/create", r.create)
+		h.GET("/find-all", r.findAll)
 	}
 }
