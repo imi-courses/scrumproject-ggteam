@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
-import { AuthProvider } from "src/app/providers/auth";
-import MainLayout from "src/layouts/MainLayout";
+import { AuthProvider } from "providers/auth";
+import MainLayout from "@/layouts/MainLayout";
 
 const Root: FC = () => {
   return (

@@ -1,6 +1,7 @@
+import { setEngine } from "crypto";
 import { FormEvent, useEffect, useState } from "react";
-import Button from "ui/Button";
-import Input from "ui/Input";
+import { Button } from "ui/button";
+import { Input } from "ui/input";
 
 const CreateEmployeeForm = () => {
   const [email, setEmail] = useState("");
@@ -45,13 +46,19 @@ const CreateEmployeeForm = () => {
       <div>
         <span>ФИО</span>
         <div>
-          <Input value={surname} setValue={setSurname} />
-          <Input value={firstname} setValue={setFirstname} />
-          <Input value={middlename} setValue={setMiddlename} />
+          <Input value={surname} onChange={(e) => setSurname(e.target.value)} />
+          <Input
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
+          />
+          <Input
+            value={middlename}
+            onChange={(e) => setMiddlename(e.target.value)}
+          />
         </div>
       </div>
 
-      <Input value={email} setValue={setEmail} />
+      <Input value={email} onChange={(e) => setEmail(e.target.value)} />
       <Button type="submit">Авторизоваться</Button>
     </form>
   );

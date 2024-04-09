@@ -1,14 +1,13 @@
 import { FormEvent, useEffect, useState } from "react";
-import Button from "ui/Button";
-import Input from "ui/Input";
+import { Button } from "ui/button";
+import { Input } from "ui/input";
 
 const SearchEmployeeForm = () => {
- const [email, setEmail] = useState("");
- const [isAuth, setAuth] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isAuth, setAuth] = useState(false);
 
- const onSubmit = async (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
 
     const response = await fetch(
       import.meta.env.VITE_API_URL + "/employee/find_one",
@@ -24,27 +23,27 @@ const SearchEmployeeForm = () => {
 
     const json = await response.json();
     console.log(json);
- };
+  };
 
- useEffect(() => {
+  useEffect(() => {
     if (window && localStorage.getItem("access_token")) {
       setAuth(true);
     }
- }, []);
+  }, []);
 
- if (!isAuth) return;
+  if (!isAuth) return;
 
- return (
+  return (
     <form onSubmit={onSubmit}>
       <div>
         <span>Search by Email</span>
         <div>
-          <Input value={email} setValue={setEmail} />
+          <Input value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
       </div>
       <Button type="submit">Search</Button>
     </form>
- );
+  );
 };
 
 export default SearchEmployeeForm;

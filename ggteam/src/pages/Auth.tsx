@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "src/app/providers/auth";
-import AdminForm from "src/features/AdminForm";
-import EmployeeForm from "src/features/EmployeeForm";
-import Button from "ui/Button";
+import { useAuth } from "providers/auth";
+import AdminForm from "@/features/AdminForm";
+import EmployeeForm from "@/features/EmployeeForm";
+import { Button } from "ui/button";
 import "styles/Auth.css";
 
 interface showAuthForm {

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react";
-import { useAuth } from "src/app/providers/auth";
-import Button from "ui/Button";
-import Input from "ui/Input";
+import { useAuth } from "providers/auth";
+import { Button } from "ui/button";
+import { Input } from "ui/input";
 import "styles/Auth.css";
 
 const EmployeeForm = () => {
@@ -34,7 +34,7 @@ const EmployeeForm = () => {
         <label htmlFor="email" className="classFormLabel">
           Email
         </label>
-        <Input value={email} setValue={setEmail} />
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
       <div className="classFormGroup">
         <label htmlFor="password" className="classFormLabel">

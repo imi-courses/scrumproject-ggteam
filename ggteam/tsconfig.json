@@ -20,10 +20,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
+      "@/*": ["./src/*"],
+      "providers/*": ["./src/app/providers/*"],
       "styles/*": ["./src/shared/styles/*"],
       "icons/*": ["./src/shared/icons/*"],
-      "ui/*": ["./src/shared/ui/*"],
-      "src/*": ["./src/*"]
+      "ui/*": ["./src/shared/ui/*"]
     }
   },
   "include": ["src", "**/*.tsx", "**/*.ts"],

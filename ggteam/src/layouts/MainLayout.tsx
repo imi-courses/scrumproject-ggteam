@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
-import { useAuth } from "src/app/providers/auth";
-import Header from "src/widgets/Header";
+import { useAuth } from "providers/auth";
+import Header from "@/widgets/Header";
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   const { isLoading: authIsLoading } = useAuth();
