@@ -14,6 +14,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/shared/ui/card";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -21,7 +30,8 @@ const formSchema = z.object({
 });
 
 const AdminForm = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, setToken, setUserRole } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,41 +54,56 @@ const AdminForm = () => {
     if (response.status === 200) {
       localStorage.setItem("access_token", json["access_token"]);
       setAuth(true);
+      setToken(json["access_token"]);
+      setUserRole("admin");
+      navigate("/admin");
     }
-    console.log(values);
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="password" type="password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit">Авторизоваться</Button>
+        <Card>
+          <CardHeader>
+            <CardTitle>Авторизация Администратора</CardTitle>
+            <CardDescription>
+              Только истинный админ сможет войти
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Электронная почта</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Почта" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Секретный ключ</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Ключ" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter>
+            <Button className="w-full" type="submit">
+              Авторизоваться
+            </Button>
+          </CardFooter>
+        </Card>
       </form>
     </Form>
   );
