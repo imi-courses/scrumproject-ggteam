@@ -3,15 +3,15 @@ package admin
 import (
 	"time"
 
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/repository"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 )
 
 type UseCase struct {
-	repo       repository.Admin
+	repo       usecase.AdminRepo
 	ctxTimeout time.Duration
 }
 
-func New(r repository.Admin, t time.Duration) *UseCase {
+func New(r usecase.AdminRepo, t time.Duration) *UseCase {
 	return &UseCase{
 		repo:       r,
 		ctxTimeout: t,

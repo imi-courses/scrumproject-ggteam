@@ -1,4 +1,4 @@
-package employee
+package repository
 
 import (
 	"context"
@@ -7,7 +7,10 @@ import (
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
 )
 
-func (r *Repository) Create(ctx context.Context, data dto.CreateEmployee) (*entity.Employee, error) {
+func (r *Repository) Create(
+	ctx context.Context,
+	data dto.CreateEmployee,
+) (*entity.Employee, error) {
 	employee := &entity.Employee{
 		Firstname:  data.Firstname,
 		Surname:    data.Surname,

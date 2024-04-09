@@ -12,7 +12,6 @@ import (
 
 	v1 "github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/entity"
-	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/config"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/httpserver"
 	"github.com/imi-courses/scrumproject-ggteam/server/pkg/logger"
@@ -36,7 +35,7 @@ func Run(cfg *config.Config) {
 	}
 
 	// UseCases
-	usecases := usecase.New(cfg, db)
+	usecases := NewUseCases(cfg, db)
 
 	// Set Admin
 	var admin *entity.Admin
