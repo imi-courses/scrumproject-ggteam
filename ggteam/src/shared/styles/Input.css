@@ -1,0 +1,9 @@
+.classInput {
+    width: 100%;
+    padding: 15px 0 10px 0;
+    border: none;
+    border-bottom: 1.2px solid rgb(20, 20, 20);
+    background-color: transparent;
+    outline: none;
+    transition: 0.3s;
+}

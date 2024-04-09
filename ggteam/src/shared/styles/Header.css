@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+.headerStyle {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    height: 80px;
+    color: white;
+    background-color: #1A76E3;
+}
+
+.headerLogo {
+    align-self: center;
+    margin-left: 10%;
+    font-size: 28px;
+    font-family: sans-serif;
+}
+
+.headerProfile {
+    align-self: center;
+    position: absolute;
+    right: 0;
+    margin-right: 10%;
+    font-size: 18px;
+    font-family: sans-serif;
+}
