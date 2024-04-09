@@ -28,7 +28,7 @@ const formSchema = z.object({
 });
 
 const EmployeeForm = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, setToken, setUserRole } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -51,6 +51,8 @@ const EmployeeForm = () => {
     if (response.status === 200) {
       localStorage.setItem("access_token", json["access_token"]);
       setAuth(true);
+      setToken(json["access_token"]);
+      setUserRole("employee");
     }
   };
 
