@@ -53,6 +53,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       .then(async (res) => {
         const data = await res.json();
         if (res.status === 200) {
+          setToken(data["access_token"]);
           localStorage.setItem("access_token", data["access_token"]);
           return true;
         }
@@ -80,14 +81,8 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
             setUserRole(data["role"]);
           } else {
             const isLoggedIn = await refreshTokens();
-            if (isLoggedIn) {
-              setAuth(true);
-              setUserRole(data["role"]);
-              setToken(token);
-            } else {
-              setLoading(false);
-              setAuth(false);
-            }
+            setAuth(isLoggedIn);
+            if (isLoggedIn) setUserRole(data["role"]);
           }
           setLoading(false);
           return data;

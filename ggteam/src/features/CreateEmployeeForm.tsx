@@ -15,7 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
+import { useToast } from "@/shared/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "ui/button";
 import { Input } from "ui/input";
@@ -25,11 +27,16 @@ const formSchema = z.object({
   email: z.string().email(),
   firstname: z.string().min(1).max(16),
   surname: z.string().min(1).max(16),
-  middlename: z.string().min(1).max(16).optional(),
+  middlename: z.string().optional(),
 });
 
-const CreateEmployeeForm = () => {
+interface CreateEmployeeFormProps {
+  getEmployees: () => void;
+}
+
+const CreateEmployeeForm: FC<CreateEmployeeFormProps> = ({ getEmployees }) => {
   const { token } = useAuth();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,6 +63,14 @@ const CreateEmployeeForm = () => {
     );
 
     const json = await response.json();
+    toast({
+      title:
+        response.status === 200
+          ? "Сотрудник был создан"
+          : "Что-то пошло не так",
+      description: response.status === 200 ? "" : json["message"],
+    });
+    getEmployees();
     console.log(json);
   };
 
@@ -124,7 +139,9 @@ const CreateEmployeeForm = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit">Авторизоваться</Button>
+            <Button type="submit" className="w-full">
+              Зарегистрировать
+            </Button>
           </CardFooter>
         </Card>
       </form>

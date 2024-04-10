@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sethvargo/go-password/password"
 
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/exception"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/dto"
@@ -35,11 +34,12 @@ func (r *route) create(c *gin.Context) {
 		return
 	}
 
-	password, err := password.Generate(8, 8, 0, false, false)
-	if err != nil {
-		exception.InternalServerError(c, err.Error())
-		return
-	}
+	// password, err := password.Generate(8, 8, 0, false, false)
+	// if err != nil {
+	// 	exception.InternalServerError(c, err.Error())
+	// 	return
+	// }
+	password := "123123123"
 
 	hashedPassword, err := r.uh.HashPassword(password)
 	if err != nil {

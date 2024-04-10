@@ -19,7 +19,6 @@ type UseCases struct {
 type (
 	Admin interface {
 		FindOne(context.Context, entity.Admin) (*entity.Admin, error)
-		Delete(context.Context, string) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Admin, error)
 	}
 	AdminRepo interface {
@@ -27,13 +26,13 @@ type (
 		FindOneById(context.Context, uuid.UUID) (*entity.Admin, error)
 		FindOneByEmail(context.Context, string) (*entity.Admin, error)
 		FindOneByRefreshToken(context.Context, string) (*entity.Admin, error)
-		Delete(context.Context, string) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Admin, error)
 	}
 	Employee interface {
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
 		FindOne(context.Context, entity.Employee) (*entity.Employee, error)
 		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
+		Delete(context.Context, uuid.UUID) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	EmployeeRepo interface {
@@ -42,6 +41,7 @@ type (
 		FindOneByEmail(context.Context, string) (*entity.Employee, error)
 		FindOneByRefreshToken(context.Context, string) (*entity.Employee, error)
 		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
+		Delete(context.Context, uuid.UUID) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
 	}
 	Hash interface {
