@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import AdminDashboardPage from "src/pages/AdminDashboard";
-import AuthPage from "src/pages/Auth";
-import EmployeeDashboardPage from "src/pages/EmployeeDashboard";
-import Root from "src/pages/Root";
+import AdminDashboardPage from "@/pages/AdminDashboard";
+import AuthPage from "@/pages/Auth";
+import EmployeeDashboardPage from "@/pages/EmployeeDashboard";
+import Root from "@/pages/Root";
+import AdminLayout from "@/layouts/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
       },
       {
         path: "admin",
-        element: <AdminDashboardPage />,
+        element: (
+          <AdminLayout>
+            <AdminDashboardPage />
+          </AdminLayout>
+        ),
       },
       {
         path: "auth",

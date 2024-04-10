@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { useAuth } from "src/app/providers/auth";
-import Button from "ui/Button";
+import { useAuth } from "providers/auth";
+import { Button } from "ui/button";
 
 const EmployeeDashboardPage: FC = () => {
   const { logout } = useAuth();

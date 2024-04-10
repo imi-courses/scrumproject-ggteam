@@ -1,13 +1,15 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
-import { AuthProvider } from "src/app/providers/auth";
-import MainLayout from "src/layouts/MainLayout";
+import { AuthProvider } from "providers/auth";
+import MainLayout from "@/layouts/MainLayout";
+import { Toaster } from "@/shared/ui/toaster";
 
 const Root: FC = () => {
   return (
     <AuthProvider>
       <MainLayout>
         <Outlet />
+        <Toaster />
       </MainLayout>
     </AuthProvider>
   );

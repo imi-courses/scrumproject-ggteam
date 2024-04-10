@@ -9,7 +9,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useNavigate } from "react-router-dom";
 
 type UserRole = "admin" | "employee" | undefined;
 
@@ -20,6 +19,8 @@ interface AuthContext {
   userRole: UserRole;
   logout: () => void;
   token: string;
+  setToken: Dispatch<SetStateAction<string>>;
+  setUserRole: Dispatch<SetStateAction<UserRole>>;
 }
 
 const defaultValues: AuthContext = {
@@ -29,6 +30,8 @@ const defaultValues: AuthContext = {
   userRole: undefined,
   logout: () => null,
   token: "",
+  setToken: () => null,
+  setUserRole: () => null,
 };
 
 const Context = createContext(defaultValues);
@@ -41,7 +44,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(defaultValues.isLoading);
   const [userRole, setUserRole] = useState<UserRole>(defaultValues.userRole);
   const [token, setToken] = useState(defaultValues.token);
-  const navigate = useNavigate();
 
   const refreshTokens = useCallback(async () => {
     return fetch(import.meta.env.VITE_API_URL + "/auth/refresh", {
@@ -51,6 +53,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       .then(async (res) => {
         const data = await res.json();
         if (res.status === 200) {
+          setToken(data["access_token"]);
           localStorage.setItem("access_token", data["access_token"]);
           return true;
         }
@@ -78,22 +81,15 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
             setUserRole(data["role"]);
           } else {
             const isLoggedIn = await refreshTokens();
-            if (isLoggedIn) {
-              setAuth(true);
-              setUserRole(data["role"]);
-              setToken(token);
-            } else {
-              setLoading(false);
-              setAuth(false);
-              navigate("/auth");
-            }
+            setAuth(isLoggedIn);
+            if (isLoggedIn) setUserRole(data["role"]);
           }
           setLoading(false);
           return data;
         })
         .catch((err) => console.error(err));
     },
-    [navigate, refreshTokens],
+    [refreshTokens],
   );
 
   const logout = async () => {
@@ -108,7 +104,6 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         if (res.status === 200) {
           setAuth(false);
           localStorage.removeItem("access_token");
-          navigate("/auth");
         }
       })
       .catch((err) => console.error(err));
@@ -121,12 +116,11 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         getUserInfo(token);
       };
 
-    navigate("/auth");
     return () => {
       setLoading(false);
       setAuth(false);
     };
-  }, [getUserInfo, navigate]);
+  }, [getUserInfo]);
 
   const exposed = {
     isAuth,
@@ -135,6 +129,8 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
     userRole,
     logout,
     token,
+    setToken,
+    setUserRole,
   };
 
   return <Context.Provider value={exposed}>{children}</Context.Provider>;
