@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase/admin"
+	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase/client"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase/employee"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase/hash"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase/jwt"
@@ -15,6 +16,7 @@ func NewUseCases(cfg *config.Config, db *postgres.Postgres) usecase.UseCases {
 	return usecase.UseCases{
 		AdminUseCase:    admin.Init(db, t),
 		EmployeeUseCase: employee.Init(db, t),
+		ClientUseCase:   client.Init(db, t),
 		HashUseCase:     hash.Init(),
 		JwtUseCase:      jwt.Init(jwt.Config(cfg.JWT)),
 	}

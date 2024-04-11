@@ -20,5 +20,7 @@ func New(handler *gin.RouterGroup, ue usecase.Employee, uh usecase.Hash, l *slog
 	{
 		h.POST("/create", r.create)
 		h.GET("/find-all", r.findAll)
+		h.PUT("/:id", r.update)
+		h.DELETE("/:id", r.delete)
 	}
 }
