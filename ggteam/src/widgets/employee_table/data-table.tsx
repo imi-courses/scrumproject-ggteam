@@ -12,7 +12,16 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu"
+import EditEmployeeForm from "@/features/EditEmployeeForm";
+import { Dialog } from "@/shared/ui/dialog"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -66,17 +75,22 @@ export function DataTable<TData, TValue>({
                   </TableCell>
                 ))}
                 <TableCell>
-                  <DropdownMenu.Root>
-                    <DropdownMenu.Trigger>⋮</DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                      <DropdownMenu.Item>
-                        Edit
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item>
-                        Delete
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Root>
+                  <Dialog>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>⋮</DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                    <DropdownMenuLabel>LOL</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem><EditEmployeeForm employeeData={{
+                        email: "",
+                        firstname: "",
+                        surname: "",
+                        middlename: undefined
+                      }}/></DropdownMenuItem>
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  </Dialog>       
                 </TableCell>
               </TableRow>
             ))

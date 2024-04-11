@@ -22,7 +22,15 @@ import { useForm } from "react-hook-form";
 import { Button } from "ui/button";
 import { Input } from "ui/input";
 import { z } from "zod";
-import * as Dialog from '@radix-ui/react-dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/shared/ui/dialog"
+  
 
 interface EditEmployeeFormProps {
   employeeData: {
@@ -31,12 +39,10 @@ interface EditEmployeeFormProps {
     surname: string;
     middlename?: string;
   };
-  onClose: () => void; // Function to close the dialog
 }
 
 const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
   employeeData,
-  onClose,
 }) => {
   const { token } = useAuth();
   const { toast } = useToast();
@@ -60,7 +66,7 @@ const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const response = await fetch(
-      import.meta.env.VITE_API_URL + "/employee/update",
+      import.meta.env.VITE_API_URL + "/employee/update" + id,
       {
         method: "PUT",
         headers: {
@@ -80,14 +86,13 @@ const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
           : "Something went wrong",
       description: response.status === 200 ? "" : json["message"],
     });
-    onClose(); // Close the dialog after updating
     console.log(json);
   };
 
   return (
-    <Dialog.Root onClose={onClose}>
-      <Dialog.Trigger />
-      <Dialog.Content>
+    <>
+      <DialogTrigger>Open</DialogTrigger>
+      <DialogContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <Card>
@@ -159,8 +164,8 @@ const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
             </Card>
           </form>
         </Form>
-      </Dialog.Content>
-    </Dialog.Root>
+      </DialogContent>
+    </>
   );
 };
 
