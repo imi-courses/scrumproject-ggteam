@@ -4,10 +4,13 @@ import { DataTable } from "./data-table";
 
 interface EmployeeTableProps {
   data: Employee[];
+  getEmployees: () => void;
 }
 
-const EmployeeTable: FC<EmployeeTableProps> = ({ data }) => {
-  return <DataTable columns={columns} data={data} />;
+const EmployeeTable: FC<EmployeeTableProps> = ({ data, getEmployees }) => {
+  return (
+    <DataTable columns={columns} data={data} getEmployees={getEmployees} />
+  );
 };
 
 export default EmployeeTable;
