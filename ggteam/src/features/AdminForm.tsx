@@ -23,6 +23,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import { useNavigate } from "react-router-dom";
+import { toast } from "@/shared/ui/use-toast";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -57,6 +58,12 @@ const AdminForm = () => {
       setToken(json["access_token"]);
       setUserRole("admin");
       navigate("/admin");
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Что-то пошло не так",
+        description: json.message,
+      });
     }
   };
 

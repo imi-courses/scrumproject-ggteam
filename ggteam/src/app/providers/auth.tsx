@@ -104,6 +104,9 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         if (res.status === 200) {
           setAuth(false);
           localStorage.removeItem("access_token");
+        } else if (await refreshTokens()) {
+          setAuth(false);
+          localStorage.removeItem("access_token");
         }
       })
       .catch((err) => console.error(err));
