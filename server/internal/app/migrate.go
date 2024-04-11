@@ -6,5 +6,5 @@ import (
 )
 
 func migrate(db *postgres.Postgres) {
-	db.AutoMigrate(&entity.Admin{}, &entity.Employee{})
+	db.AutoMigrate(&entity.Admin{}, &entity.Employee{}, &entity.Client{}, &entity.RealEstate{})
 }

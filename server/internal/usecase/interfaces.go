@@ -10,13 +10,16 @@ import (
 )
 
 type UseCases struct {
-	AdminUseCase    Admin
-	EmployeeUseCase Employee
-	HashUseCase     Hash
-	JwtUseCase      Jwt
+	AdminUseCase      Admin
+	EmployeeUseCase   Employee
+	ClientUseCase     Client
+	RealEstateUseCase RealEstate
+	HashUseCase       Hash
+	JwtUseCase        Jwt
 }
 
 type (
+	// Users
 	Admin interface {
 		FindOne(context.Context, entity.Admin) (*entity.Admin, error)
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Admin, error)
@@ -32,8 +35,9 @@ type (
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
 		FindOne(context.Context, entity.Employee) (*entity.Employee, error)
 		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
-		Delete(context.Context, uuid.UUID) error
+		Update(context.Context, uuid.UUID, dto.UpdateEmployee) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
+		Delete(context.Context, uuid.UUID) error
 	}
 	EmployeeRepo interface {
 		Create(context.Context, dto.CreateEmployee) (*entity.Employee, error)
@@ -41,8 +45,9 @@ type (
 		FindOneByEmail(context.Context, string) (*entity.Employee, error)
 		FindOneByRefreshToken(context.Context, string) (*entity.Employee, error)
 		FindAll(context.Context, dto.Page) ([]entity.Employee, error)
-		Delete(context.Context, uuid.UUID) error
+		Update(context.Context, uuid.UUID, dto.UpdateEmployee) error
 		UpdateRefreshToken(context.Context, dto.UpdateRefreshToken) (*entity.Employee, error)
+		Delete(context.Context, uuid.UUID) error
 	}
 	Hash interface {
 		HashPassword(string) (string, error)
@@ -55,4 +60,16 @@ type (
 		ExtractFromToken(string, string, bool) (string, error)
 		CreateTokens(dto.AccessTokenPayload, dto.RefreshTokenPayload) (*dto.Tokens, error)
 	}
+	Client interface {
+		Create(context.Context, dto.CreateClient) (*entity.Client, error)
+		FindAll(context.Context, dto.Page) ([]entity.Client, error)
+		Delete(context.Context, uuid.UUID) error
+	}
+	ClientRepo interface {
+		Create(context.Context, dto.CreateClient) (*entity.Client, error)
+		FindAll(context.Context, dto.Page) ([]entity.Client, error)
+		Delete(context.Context, uuid.UUID) error
+	}
+	RealEstate     interface{}
+	RealEstateRepo interface{}
 )
