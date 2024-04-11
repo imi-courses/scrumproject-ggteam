@@ -1,4 +1,4 @@
-package employee
+package client
 
 import (
 	"net/http"
@@ -12,27 +12,26 @@ import (
 )
 
 type findAllResponse struct {
-	Employees []entity.Employee `json:"employees"`
-	Page      int               `json:"page"`
-	Count     int               `json:"count"`
+	Clients []entity.Client `json:"clients"`
+	Page    int             `json:"page"`
+	Count   int             `json:"count"`
 }
 
 func (r *route) findAll(c *gin.Context) {
-	var err error
 	page, count, err := util.GetPage(c.Query("page"), c.Query("count"))
 	if err != nil {
 		exception.BadRequest(c, err.Error())
 		return
 	}
 
-	employees, err := r.ue.FindAll(c.Request.Context(), dto.Page{
+	clients, err := r.uc.FindAll(c.Request.Context(), dto.Page{
 		Count:       count,
 		CurrentPage: page,
 	})
 	if err != nil {
-		exception.InternalServerError(c, "employees not found")
+		exception.InternalServerError(c, "clients not found")
 		return
 	}
 
-	c.JSON(http.StatusOK, findAllResponse{Employees: employees, Page: page, Count: count})
+	c.JSON(http.StatusOK, findAllResponse{Clients: clients, Page: page, Count: count})
 }
