@@ -55,7 +55,7 @@ const AdminDashboardPage: FC = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="list" className="sm:mt-0 w-full">
-          <EmployeeTable data={data} />
+          <EmployeeTable data={data} getEmployees={getData} />
         </TabsContent>
         <TabsContent value="create" className="sm:mt-0 w-full">
           <CreateEmployeeForm getEmployees={getData} />
