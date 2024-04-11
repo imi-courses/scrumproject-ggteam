@@ -21,7 +21,7 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 
 	// CORS
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173"}
+	config.AllowOrigins = []string{"http://localhost:5173", "http://127.0.0.1:5173"}
 	config.AllowCredentials = true
 	config.AddAllowHeaders("Authorization")
 	handler.Use(cors.New(config))
@@ -44,6 +44,6 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 			l,
 		)
 		employee.New(protected, uc.EmployeeUseCase, uc.HashUseCase, l)
-		client.New(private, uc.ClientUseCase, l)
+		client.New(public, uc.ClientUseCase, l)
 	}
 }

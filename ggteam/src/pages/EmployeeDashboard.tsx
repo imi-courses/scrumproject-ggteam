@@ -1,7 +1,5 @@
-import { FC } from "react";
-
-const EmployeeDashboardPage: FC = () => {
-  return <section className="container sm:flex">EMP</section>;
-};
+import { Navigate } from "react-router-dom";
+import { Button } from "@/shared/ui/button";
+import { EmployeeDashboardPage } from "./EmployeeDashboardPage";
 
 export default EmployeeDashboardPage;

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AdminDashboardPage from "@/pages/AdminDashboard";
 import AuthPage from "@/pages/Auth";
-import EmployeeDashboardPage from "@/pages/EmployeeDashboard";
+import EmployeeDashboardPage from "@/pages/EmployeeDashboardPage";
 import Root from "@/pages/Root";
 import AdminLayout from "@/layouts/AdminLayout";
 
