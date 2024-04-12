@@ -21,6 +21,7 @@ interface AuthContext {
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
   setUserRole: Dispatch<SetStateAction<UserRole>>;
+  getUserInfo: () => void;
 }
 
 const defaultValues: AuthContext = {
@@ -32,6 +33,7 @@ const defaultValues: AuthContext = {
   token: "",
   setToken: () => null,
   setUserRole: () => null,
+  getUserInfo: () => null,
 };
 
 const Context = createContext(defaultValues);
@@ -65,32 +67,32 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       });
   }, []);
 
-  const getUserInfo = useCallback(
-    async (token: string) => {
-      return fetch(import.meta.env.VITE_API_URL + "/auth/me", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then(async (res) => {
-          const data = await res.json();
-          if (res.status === 200) {
-            setAuth(true);
-            setToken(token);
-            setUserRole(data["role"]);
-          } else {
-            const isLoggedIn = await refreshTokens();
-            setAuth(isLoggedIn);
-            if (isLoggedIn) setUserRole(data["role"]);
-          }
-          setLoading(false);
-          return data;
-        })
-        .catch((err) => console.error(err));
-    },
-    [refreshTokens],
-  );
+  const getUserInfo = async (t?: string) => {
+    let tt = "";
+    if (t) tt = t;
+    else tt = token;
+    const response = await fetch(import.meta.env.VITE_API_URL + "/auth/me", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + tt,
+      },
+      credentials: "include",
+    });
+
+    const data = await response.json();
+    if (response.status === 200) {
+      setAuth(true);
+      setToken(tt);
+      setUserRole(data["role"]);
+    } else {
+      const isLoggedIn = await refreshTokens();
+      setAuth(isLoggedIn);
+      if (isLoggedIn) setUserRole(data["role"]);
+    }
+    setLoading(false);
+  };
+
+  const getUserInfoCallback = useCallback(getUserInfo, [refreshTokens, token]);
 
   const logout = async () => {
     return fetch(import.meta.env.VITE_API_URL + "/auth/logout", {
@@ -111,16 +113,17 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    if (token)
+    if (token) {
       return () => {
-        getUserInfo(token);
+        getUserInfoCallback(token);
       };
+    }
 
     return () => {
       setLoading(false);
       setAuth(false);
     };
-  }, [getUserInfo]);
+  }, [getUserInfoCallback]);
 
   const exposed = {
     isAuth,
@@ -131,6 +134,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
     token,
     setToken,
     setUserRole,
+    getUserInfo,
   };
 
   return <Context.Provider value={exposed}>{children}</Context.Provider>;

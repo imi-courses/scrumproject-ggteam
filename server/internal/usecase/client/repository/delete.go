@@ -9,8 +9,5 @@ import (
 )
 
 func (r *Repository) Delete(ctx context.Context, id uuid.UUID) error {
-	if err := r.WithContext(ctx).Delete(&entity.Client{ID: id}).Error; err != nil {
-		return err
-	}
-	return nil
+	return r.WithContext(ctx).Unscoped().Delete(&entity.Client{ID: id}).Error
 }
