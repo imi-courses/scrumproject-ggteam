@@ -54,7 +54,7 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const { token } = useAuth();
+  const { token, getUserInfo } = useAuth();
 
   const deleteEmployee = async (id: string) => {
     const response = await fetch(
@@ -71,6 +71,9 @@ export function DataTable<TData, TValue>({
     const json = await response.json();
     if (response.status === 200) {
       getEmployees();
+    }
+    if (response.status === 401) {
+      getUserInfo();
     }
     toast({
       variant: response.status === 200 ? "default" : "destructive",
