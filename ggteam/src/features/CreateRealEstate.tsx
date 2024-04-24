@@ -1,12 +1,10 @@
 import { useAuth } from "@/app/providers/auth";
 import { Button } from "@/shared/ui/button";
 import {
-  Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/shared/ui/dialog";
 import {
   Form,

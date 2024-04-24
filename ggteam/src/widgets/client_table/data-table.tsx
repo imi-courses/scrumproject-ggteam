@@ -38,7 +38,6 @@ import { toast } from "@/shared/ui/use-toast";
 import EditClientForm from "@/features/EditClientForm";
 import CreateRealEstatePDF from "@/features/CreateRealEstatePDF";
 import CreateRealEstate from "@/features/CreateRealEstate";
-import EditRealEstatePDF from "@/features/EditRealEstatePDF";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -163,14 +162,6 @@ export function DataTable<TData, TValue>({
                       </DropdownMenu>
                       {dialogus == "create pdf" && (
                         <CreateRealEstatePDF
-                          phone={row.getValue("phone")}
-                          email={row.getValue("email")}
-                          fio={row.getValue("fio")}
-                        />
-                      )}
-
-                      {dialogus == "update pdf" && (
-                        <EditRealEstatePDF
                           phone={row.getValue("phone")}
                           email={row.getValue("email")}
                           fio={row.getValue("fio")}

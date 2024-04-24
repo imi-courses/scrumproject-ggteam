@@ -169,8 +169,6 @@ export function DataTable<TData, TValue>({
 
                       {dialogus == "update pdf" && (
                         <EditRealEstatePDF
-                          address={row.getValue("address")}
-                          type={row.getValue("type")}
                           clientId={row.getValue("client_id")}
                         />
                       )}

@@ -1,6 +1,5 @@
 import { useAuth } from "@/app/providers/auth";
 import CreateClient from "@/features/CreateClientForm";
-import MyDocument from "@/features/CreateRealEstatePDF";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { Client } from "@/widgets/client_table/columns";
 import ClientTable from "@/widgets/client_table/widget";
