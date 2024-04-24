@@ -62,14 +62,33 @@ type (
 	}
 	Client interface {
 		Create(context.Context, dto.CreateClient) (*entity.Client, error)
+		Update(context.Context, uuid.UUID, dto.UpdateClient) error
+		FindOne(context.Context, entity.Client) (*entity.Client, error)
 		FindAll(context.Context, dto.Page) ([]entity.Client, error)
 		Delete(context.Context, uuid.UUID) error
 	}
 	ClientRepo interface {
 		Create(context.Context, dto.CreateClient) (*entity.Client, error)
+		Update(context.Context, uuid.UUID, dto.UpdateClient) error
+		FindOneById(context.Context, uuid.UUID) (*entity.Client, error)
+		FindOneByEmail(context.Context, string) (*entity.Client, error)
+		FindOneByPhone(context.Context, string) (*entity.Client, error)
 		FindAll(context.Context, dto.Page) ([]entity.Client, error)
 		Delete(context.Context, uuid.UUID) error
 	}
-	RealEstate     interface{}
-	RealEstateRepo interface{}
+	RealEstate interface {
+		Create(context.Context, dto.CreateRealEstate) (*entity.RealEstate, error)
+		Update(context.Context, uuid.UUID, dto.UpdateRealEstate) error
+		FindOne(context.Context, entity.RealEstate) (*entity.RealEstate, error)
+		FindAll(context.Context, dto.Page) ([]entity.RealEstate, error)
+		Delete(context.Context, uuid.UUID) error
+	}
+	RealEstateRepo interface {
+		Create(context.Context, dto.CreateRealEstate) (*entity.RealEstate, error)
+		Update(context.Context, uuid.UUID, dto.UpdateRealEstate) error
+		FindOneById(context.Context, uuid.UUID) (*entity.RealEstate, error)
+		FindOneByClientId(context.Context, uuid.UUID) (*entity.RealEstate, error)
+		FindAll(context.Context, dto.Page) ([]entity.RealEstate, error)
+		Delete(context.Context, uuid.UUID) error
+	}
 )

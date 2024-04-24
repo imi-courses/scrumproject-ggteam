@@ -1,4 +1,4 @@
-package client
+package realestate
 
 import (
 	"log/slog"
@@ -9,17 +9,16 @@ import (
 )
 
 type route struct {
-	uc usecase.Client
+	uc usecase.RealEstate
 	l  *slog.Logger
 }
 
-func New(handler *gin.RouterGroup, uc usecase.Client, l *slog.Logger) {
+func New(handler *gin.RouterGroup, uc usecase.RealEstate, l *slog.Logger) {
 	r := &route{uc, l}
-	h := handler.Group("/client")
+	h := handler.Group("/real-estate")
 	{
 		h.POST("/create", r.create)
 		h.GET("/find-all", r.findAll)
-		h.GET("/:id", r.findOne)
 		h.PUT("/:id", r.update)
 		h.DELETE("/:id", r.delete)
 	}

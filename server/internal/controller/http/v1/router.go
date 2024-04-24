@@ -11,6 +11,7 @@ import (
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/client"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/employee"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/middleware"
+	realestate "github.com/imi-courses/scrumproject-ggteam/server/internal/controller/http/v1/real_estate"
 	"github.com/imi-courses/scrumproject-ggteam/server/internal/usecase"
 )
 
@@ -45,5 +46,6 @@ func NewRouter(handler *gin.Engine, l *slog.Logger, uc usecase.UseCases) {
 		)
 		employee.New(protected, uc.EmployeeUseCase, uc.HashUseCase, l)
 		client.New(private, uc.ClientUseCase, l)
+		realestate.New(private, uc.RealEstateUseCase, l)
 	}
 }
