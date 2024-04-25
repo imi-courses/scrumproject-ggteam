@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 import { useAuth } from "providers/auth";
 import Header from "@/widgets/Header";
+import Footer from "@/widgets/Footer";
 import { Navigate, useLocation } from "react-router-dom";
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
@@ -17,6 +18,7 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
       <main>
         <Header />
         {children}
+        <Footer />
       </main>
     );
   if (location.pathname == "/auth") {
