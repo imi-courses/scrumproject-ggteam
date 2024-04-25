@@ -7,7 +7,7 @@ const Header: FC = () => {
  const { logout } = useAuth();
  return (
     <header>
-      <div className="container py-2 flex justify-between items-center pl-8"> 
+      <div className="container py-2 flex justify-between items-center"> 
         <a style={{ color: '#035835' }} className="text-2xl font-semibold uppercase" href="/"> 
           Росреестр
         </a>

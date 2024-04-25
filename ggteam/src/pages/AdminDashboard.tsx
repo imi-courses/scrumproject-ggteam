@@ -41,25 +41,30 @@ const AdminDashboardPage: FC = () => {
 
   if (userRole != "admin") return <Navigate to="/" replace />;
   return (
-    <section className="container sm:flex">
+    <section className="">
       <Tabs
         defaultValue="list"
-        className="sm:flex w-full sm:gap-4 sm:justify-start sm:items-start"
+        className="sm:flex flex-col w-full sm:gap-4 sm:justify-start sm:items-start"
       >
-        <TabsList className="flex-col h-20 w-full sm:w-auto">
+        <TabsList className="h-10 w-full bg-[#035835] flex justify-between">
           <TabsTrigger value="list" className="w-full">
-            Список сотрудников
+              Список сотрудников
           </TabsTrigger>
           <TabsTrigger value="create" className="w-full">
-            Регистрация сотрудника
+              Регистрация сотрудника
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="list" className="sm:mt-0 w-full">
-          <EmployeeTable data={data} getEmployees={getData} />
-        </TabsContent>
-        <TabsContent value="create" className="sm:mt-0 w-full">
-          <CreateEmployeeForm getEmployees={getData} />
-        </TabsContent>
+        <section className="container sm:flex">
+          <TabsContent value="list" className="flex-grow bg-[#E8E8E8]" style={{
+                    borderTopLeftRadius: "0.5rem",
+                    borderTopRightRadius: "0.5rem",
+                  }}>
+            <EmployeeTable data={data} getEmployees={getData} />
+          </TabsContent>
+          <TabsContent value="create" className="flex-grow">
+            <CreateEmployeeForm getEmployees={getData} />
+          </TabsContent>
+        </section>     
       </Tabs>
     </section>
   );
