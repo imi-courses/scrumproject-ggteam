@@ -16,7 +16,7 @@ const AuthPage = () => {
   return (
     <section className="flex flex-col justify-center items-center pt-10 px-4">
       <Tabs defaultValue="employee" className="w-full xs:w-[400px]">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 bg-[#035835]">
           <TabsTrigger value="employee">Сотрудник</TabsTrigger>
           <TabsTrigger value="admin">Администратор</TabsTrigger>
         </TabsList>

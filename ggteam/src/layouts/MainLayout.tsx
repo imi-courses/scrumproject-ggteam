@@ -23,7 +23,7 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
     );
   if (location.pathname == "/auth") {
     return (
-      <main className="w-screen h-screen bg-gradient-to-tl from-slate-400 to-slate-50">
+      <main className="w-screen h-screen from-slate-400 to-slate-50 bg-[#E8E8E8]">
         {children}
       </main>
     );

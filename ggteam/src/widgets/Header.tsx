@@ -6,8 +6,8 @@ import "styles/Header.css";
 const Header: FC = () => {
  const { logout } = useAuth();
  return (
-    <header>
-      <div className="container py-2 flex justify-between items-center"> 
+    <header className="bg-white">
+      <div className="py-2 flex justify-between items-center pl-8 pr-8"> 
         <a style={{ color: '#035835' }} className="text-2xl font-semibold uppercase" href="/"> 
           Росреестр
         </a>
