@@ -70,12 +70,12 @@ const EmployeeDashboardPage: FC = () => {
   }, [getClientData, getRealEstateData]);
 
   return (
-    <section className="container sm:flex">
+    <section className="">
       <Tabs
-        defaultValue="clients"
-        className="sm:flex w-full sm:gap-4 sm:justify-start sm:items-start"
+        defaultValue="list"
+        className="sm:flex flex-col w-full sm:gap-4 sm:justify-start sm:items-start"
       >
-        <TabsList className="flex-col h-20 w-full sm:w-auto">
+        <TabsList className="h-10 w-full bg-[#035835] flex justify-between">
           <TabsTrigger value="clients" className="w-full">
             Список клиентов
           </TabsTrigger>
@@ -83,20 +83,28 @@ const EmployeeDashboardPage: FC = () => {
             Список недвижимости
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="clients" className="sm:mt-0 w-full">
-          <ClientTable
-            data={clientData}
-            getClients={getClientData}
-            getRealEstates={getRealEstateData}
-          />
-          <CreateClient getClients={getClientData} />
-        </TabsContent>
-        <TabsContent value="real-estates" className="sm:mt-0 w-full">
-          <RealEstateTable
-            data={realEstateData}
-            getRealEstates={getRealEstateData}
-          />
-        </TabsContent>
+        <section className="container sm:flex">
+          <TabsContent value="clients" className="flex-grow bg-[#E8E8E8]" style={{
+                    borderTopLeftRadius: "0.5rem",
+                    borderTopRightRadius: "0.5rem",
+                  }}>
+            <ClientTable
+              data={clientData}
+              getClients={getClientData}
+              getRealEstates={getRealEstateData}
+            />
+            <CreateClient getClients={getClientData} />
+          </TabsContent>
+          <TabsContent value="real-estates" className="flex-grow bg-[#E8E8E8]" style={{
+                    borderTopLeftRadius: "0.5rem",
+                    borderTopRightRadius: "0.5rem",
+                  }}>
+            <RealEstateTable
+              data={realEstateData}
+              getRealEstates={getRealEstateData}
+            />
+          </TabsContent>
+        </section>
       </Tabs>
     </section>
   );
